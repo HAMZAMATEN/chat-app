@@ -1,10 +1,9 @@
 import 'package:chat_app/Helper/helper_function.dart';
 import 'package:chat_app/pages/HomeScreen/home.dart';
 import 'package:chat_app/pages/auth/login.dart';
+import 'package:chat_app/res/components/loginpage.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,10 +45,10 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-     //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigoAccent),
-        useMaterial3: true,
+        primaryColor:Color(0xFFee7b64),
+        scaffoldBackgroundColor: Colors.white,
       ),
-      home:_isSignedIn ? HomePage():LoginPage(),
+      home: _isSignedIn ? HomePage():LoginPage(),
     );
   }
 }
