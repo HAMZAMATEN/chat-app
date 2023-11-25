@@ -10,7 +10,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final formKey=GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
       //   backgroundColor:Color(0xFFee7b64)),
       body:SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 20,vertical: 80),
-        child: Column(
+            child: Column(
          children:[
            LoginImage(),
            Login(),
@@ -29,8 +29,8 @@ class _LoginPageState extends State<LoginPage> {
 
         
         
-        ),
-      ));
+        ),),
+    );
 
 
 
