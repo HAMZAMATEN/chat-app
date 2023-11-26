@@ -44,10 +44,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor:Color(0xFFee7b64),
-        scaffoldBackgroundColor: Colors.white,
-      ),
+      // theme: ThemeData(
+      //   primaryColor:Color(0xFFee7b64),
+      //   scaffoldBackgroundColor: Colors.white,
+      // ),
       home: _isSignedIn ? HomePage():LoginPage(),
     );
   }

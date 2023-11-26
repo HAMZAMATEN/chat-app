@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
 
-  static const Color primaryColor = Color(0xFFee7b64);
+  static Color primaryColor = Color(0xFFee7b64);
   //Color(0xff467df1);
   static const Color secondaryColor = Colors.deepPurple;
 

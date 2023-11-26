@@ -12,7 +12,7 @@ class LoginImage extends StatelessWidget {
     Text("Chat Room",style:TextStyle(fontSize: 40,fontWeight: FontWeight.bold)),
     SizedBox(height: 10,),
     Text("Login now to see what they are talking!",
-        style:TextStyle(fontSize: 18,fontWeight: FontWeight.w400)),
+        style:TextStyle(fontSize: 19,fontWeight: FontWeight.w500)),
     SizedBox(height: 40,),
     Image(image: AssetImage("assets/images/login.png",),
       fit: BoxFit.contain,
