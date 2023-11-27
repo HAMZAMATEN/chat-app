@@ -1,3 +1,4 @@
+import 'package:chat_app/res/colors/color.dart';
 import 'package:flutter/material.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,7 +14,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Chat Room',style: TextStyle(color: Colors.white,
             fontSize: 25, fontWeight: FontWeight.bold),),
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor:AppColors.primaryColor,
       ),
       body: Center(
         child:Text('HOME PAGE'),),
