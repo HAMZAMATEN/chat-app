@@ -1,4 +1,6 @@
 import 'package:chat_app/res/colors/color.dart';
+import 'package:chat_app/res/components/navigate_function.dart';
+import 'package:chat_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,6 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  AuthService authService=AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +20,12 @@ class _HomePageState extends State<HomePage> {
         backgroundColor:AppColors.primaryColor,
       ),
       body: Center(
-        child:Text('HOME PAGE'),),
+        child:ElevatedButton(
+          child: Text("LOGOUT"),
+          onPressed: (){
+          authService.signOut();
+        },
+        ),),
 
       );
   }

@@ -9,6 +9,18 @@ class HelperFunction{
  static String userEmailKey="USEREMAILKEY";
 
   //saving data to SP
+ static Future<bool>saveUserLoggedInStatus(bool isUserLoggedIn)async{
+  SharedPreferences sp=await SharedPreferences.getInstance();
+  return await  sp.setBool(userLoggedInKey, isUserLoggedIn);
+ }
+ static Future<bool>saveUserNameSP(String userName)async{
+  SharedPreferences sp=await SharedPreferences.getInstance();
+  return await sp.setString (userNameKey, userName);
+ }
+ static Future<bool>saveUserEmailSp(String userEmail)async{
+  SharedPreferences sp=await SharedPreferences.getInstance();
+  return await sp.setString (userEmailKey, userEmail);
+ }
 
 
 
