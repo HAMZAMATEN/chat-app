@@ -9,6 +9,8 @@ import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/services/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../auth/search_page.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -67,13 +69,13 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: (){
-              nextScreen(context, SearchBar());
+              nextScreen(context, SearchPage());
               }, icon: Icon(Icons.search,color: Colors.white,),),
         ],
         elevation: 0,
         centerTitle: true,
         title: Text('Groups',style: TextStyle(color: Colors.white,
-            fontSize: 25, fontWeight: FontWeight.bold),),
+            fontSize: 27, fontWeight: FontWeight.bold),),
         backgroundColor:AppColors.primaryColor,
       ),
       drawer: Drawer(

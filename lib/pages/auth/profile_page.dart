@@ -23,7 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
         centerTitle: true,
         elevation: 0,
         title: Text('Profile',style: TextStyle(color: Colors.white,
-            fontSize: 25, fontWeight: FontWeight.bold),),
+            fontSize: 27, fontWeight: FontWeight.bold),),
         backgroundColor:AppColors.primaryColor,
       ),
       drawer: Drawer(

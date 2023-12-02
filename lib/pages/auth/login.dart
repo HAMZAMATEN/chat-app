@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: (){
                       login();
                     },
-                    child:Text("Sign In",style: TextStyle(fontSize: 20,color: AppColors.whiteColor),))
+                    child:Text("Sign In",style: TextStyle(fontSize: 20,color: Colors.white),))
             ),
             SizedBox(height: 10,),
             Text.rich(TextSpan(

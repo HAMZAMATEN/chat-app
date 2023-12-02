@@ -57,11 +57,8 @@ class _ChatPageState extends State<ChatPage> {
         elevation: 0,
         centerTitle: true,
         title: Text(widget.groupName,style: TextStyle(color: Colors.white,
-            fontSize: 25, fontWeight: FontWeight.bold),),
+            fontSize: 27, fontWeight: FontWeight.bold),),
         backgroundColor:AppColors.primaryColor,
-      ),
-      body: Center(
-        child: Text(widget.groupName),
       ),
     );
   }

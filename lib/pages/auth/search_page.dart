@@ -1,14 +1,26 @@
 import"package:flutter/material.dart";
-class SearchBar extends StatefulWidget {
-  const SearchBar({super.key});
+
+import "../../res/colors/color.dart";
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
 
   @override
-  State<SearchBar> createState() => _SearchBarState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+    elevation: 0,
+    centerTitle: true,
+    title: Text("Search", style: TextStyle(color: Colors.white,
+    fontSize: 27, fontWeight: FontWeight.bold),),
+    backgroundColor: AppColors.primaryColor,
+    ),
+   body: Center(child:Text("Searchbar")),
+
+    );
   }
 }

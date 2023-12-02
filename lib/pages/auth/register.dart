@@ -132,7 +132,7 @@ import "login.dart";
             register();
             },
             child: Text("Register", style: TextStyle(
-            fontSize: 20, color: AppColors.whiteColor),),
+            fontSize: 20, color:Colors.white),),
             ),
             ),
             SizedBox(height: 10,),
