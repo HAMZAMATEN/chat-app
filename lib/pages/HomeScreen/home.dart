@@ -2,6 +2,7 @@ import 'package:chat_app/Helper/helper_function.dart';
 import 'package:chat_app/pages/auth/login.dart';
 import 'package:chat_app/pages/auth/profile_page.dart';
 import 'package:chat_app/res/colors/color.dart';
+import 'package:chat_app/res/components/group_tile.dart';
 import 'package:chat_app/res/components/navigate_function.dart';
 import 'package:chat_app/res/components/snackbar.dart';
 import 'package:chat_app/services/auth_service.dart';
@@ -28,6 +29,14 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     gettingUserData();
   }
+  //string manipulation
+  String getId(String res) {
+    return res.substring(0, res.indexOf("_"));
+  }
+   String getName(String res){
+     return res.substring(res.indexOf("_")+1);
+   }
+
   gettingUserData()async{
     await HelperFunction.getUserNameFromSF().then((value) {
       setState(() {
@@ -250,9 +259,18 @@ class _HomePageState extends State<HomePage> {
       builder: (context ,AsyncSnapshot snapshot){
         //make some checks
         if(snapshot.hasData){
-          if(snapshot.data["groups"]!=null){
+          if(snapshot.data['groups']!=null){
             if(snapshot.data['groups'].length!=0){
-              return (Text("HELLOOO"));
+              return ListView.builder(
+                itemCount: snapshot.data['groups'].length,
+                  itemBuilder: (context,index){
+                  int reverseIndex=snapshot.data['groups'].length - index-1;
+                return GroupTile(
+                    groupId: getId(snapshot.data['groups'][reverseIndex]),
+                    groupName: getName(snapshot.data['groups'][reverseIndex]),
+                     userName: snapshot.data['fullName'],);
+                  },);
+
             }else{
               return noGroupWidget();
             }
@@ -280,7 +298,7 @@ class _HomePageState extends State<HomePage> {
               child: Icon(Icons.add_circle,size: 75,color: Colors.grey.shade600,)),
               SizedBox(height: 20,),
               const Text("you 've not joined any groups , tap"
-                  " on the add icon to create a group or alse search from top search button",
+                  " on the add icon to create a group or also search from top search button",
                 textAlign: TextAlign.center,),
             ],
           ),

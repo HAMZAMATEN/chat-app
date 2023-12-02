@@ -54,8 +54,19 @@ class DatabaseService {
     return await userDocumentReference.update({
       "groups": FieldValue.arrayUnion(
           ["${groupDocumentReference.id}_$groupName"]),
-
-
     });
   }
+    //getting chat and admin info
+    getChats(String groupId)async{
+    return groupCollection.doc(groupId).
+    collection("messages").
+    orderBy("time").
+    snapshots();
+    }
+    Future getGroupAdmin(String groupId)async{
+    DocumentReference d=groupCollection.doc(groupId);
+    DocumentSnapshot documentSnapshot =await d.get();
+    return documentSnapshot['admin'];
+    }
+
 }
