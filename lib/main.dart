@@ -49,7 +49,6 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(
       //   primaryColor:Color(0xFFee7b64),
-      //   scaffoldBackgroundColor: Colors.white,
       // ),
       home: _isSignedIn ? HomePage():LoginPage(),
     );
