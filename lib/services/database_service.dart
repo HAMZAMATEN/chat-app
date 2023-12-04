@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
@@ -78,40 +79,52 @@ getGroupMembers(String groupId) async{
     
 }
 //function->bool
-Future<bool> isUserJoined(String groupId,String groupName,String userName) async{
+Future<bool> isUserJoined(
+    String groupId,String groupName,String userName) async{
 DocumentReference userDocumentReference=userCollection.doc(uid);
 DocumentSnapshot documentSnapshot= await userDocumentReference.get();
-List<dynamic> groups =await documentSnapshot["groups"];
+List<dynamic> groups =await documentSnapshot['groups'];
 if(groups.contains("${groupId}_$groupName")) {
   return true;
-}else{
-    return false;
+}else {
+  return false;
 }
 }
 // toggling the  group join/exit
 Future toggleGroupJoin(
-    String groupId,String groupName,String userName)async{
+    String groupId,String userName,String groupName)  async{
+    //document reference
     DocumentReference userDocumentReference=userCollection.doc(uid);
-    DocumentReference groupDocumentReference=groupCollection.doc(uid);
-    DocumentSnapshot documentSnapshot=await userDocumentReference.get();
-    List<dynamic>groups=await documentSnapshot ['groups'];
+    DocumentReference groupDocumentReference=groupCollection.doc(groupId);
+
+    DocumentSnapshot documentSnapshot = await userDocumentReference.get();
+    List<dynamic> groups=await documentSnapshot ['groups'];
     //if user has our group-> then rejoin or remove
-  if(groups.contains("${groupId}_$groupName}")){
+  if(groups.contains("${groupId}_$groupName")){
     await userDocumentReference.update({
       "groups": FieldValue.arrayRemove(["${groupId}_$groupName"])
     });
         await groupDocumentReference.update({
         "members":FieldValue.arrayRemove(["${uid}_$userName"])
     });
-  }else{
+  }else {
     await userDocumentReference.update({
       "groups": FieldValue.arrayUnion(["${groupId}_$groupName"])
     });
     await groupDocumentReference.update({
       "members": FieldValue.arrayUnion(["${uid}_$userName"])
     });
-    }
   }
+  }
+  //send message
+ sendMessages(String groupId,Map<String, dynamic> chatMessagesData)async{
+    groupCollection.doc(groupId).collection("message").add(chatMessagesData);
+    groupCollection.doc(groupId).update({
+      "recentMessage":chatMessagesData["message"],
+      "recentMessageSender":chatMessagesData["sender"],
+      "recentMessageTime":chatMessagesData["time"].toString(),
+    });
+ }
 }
 
 

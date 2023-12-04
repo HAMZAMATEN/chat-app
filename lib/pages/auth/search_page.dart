@@ -6,7 +6,6 @@ import "package:chat_app/services/database_service.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import"package:flutter/material.dart";
-import "package:get/get.dart";
 
 import "../../res/colors/color.dart";
 class SearchPage extends StatefulWidget {
@@ -19,17 +18,26 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   TextEditingController searchController = TextEditingController();
   bool isLoading = false;
-  QuerySnapshot?searchSnapshot;
+  QuerySnapshot? searchSnapshot;
   bool hasUserSearched = false;
   String userName = "";
-  User ? user;
   bool isJoined = false;
+  User ? user;
+
 
   @override
   void initState() {
-    // TODO: implement initState
     getCurrentUserIdAndName();
     super.initState();
+  }
+
+  getCurrentUserIdAndName() async {
+    await HelperFunction.getUserNameFromSF().then((value) {
+      setState(() {
+        userName = value!;
+      });
+    });
+    user = FirebaseAuth.instance.currentUser;
   }
 
   String getName(String r) {
@@ -39,14 +47,6 @@ class _SearchPageState extends State<SearchPage> {
     return res.substring(0,res.indexOf("_"));
   }
 
-  getCurrentUserIdAndName() async {
-    HelperFunction.getUserNameFromSF().then((value) {
-      setState(() {
-        userName = value!;
-      });
-    });
-    user = FirebaseAuth.instance.currentUser;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,8 +114,7 @@ class _SearchPageState extends State<SearchPage> {
       });
       await DatabaseService()
           .searchByName(searchController.text)
-          .then((
-          snapshot) {
+          .then((snapshot) {
         setState(() {
           searchSnapshot = snapshot;
           isLoading = false;
@@ -127,7 +126,7 @@ class _SearchPageState extends State<SearchPage> {
     groupList() {
      return  hasUserSearched ? ListView.builder(
           shrinkWrap: true,
-          itemCount: searchSnapshot!.docs.length,
+           itemCount: searchSnapshot!.docs.length ,
           itemBuilder: (context, index) {
             return groupTile(
               userName,
@@ -167,22 +166,25 @@ class _SearchPageState extends State<SearchPage> {
       trailing: InkWell(
         onTap:() async {
           await DatabaseService(uid: user!.uid).toggleGroupJoin(groupId, groupName, userName);
-          if(isJoined){
             setState(() {
-              isJoined=!isJoined;
-            });
+              isJoined= !isJoined;
+              if(isJoined){
             showSnackBar(context, Colors.green, "Successfully joined the group");
             Future.delayed(Duration(seconds: 2),(){
-              nextScreen(context, ChatPage(groupId: groupId, groupName: groupName, userName: userName));
+              nextScreen(context, ChatPage(
+                  groupId: groupId,
+                  groupName: groupName,
+                  userName: userName));
             });
           }else{
             setState(() {
-              isJoined=!isJoined;
-              showSnackBar(context, Colors.redAccent, "left the group $groupName");
-
+              isJoined= !isJoined;
+              showSnackBar(context, Colors.redAccent, "Left the group $groupName");
             });
           }
         },
+            );},
+
         child:  isJoined ? Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -193,7 +195,7 @@ class _SearchPageState extends State<SearchPage> {
           child: Text("Joined",style: TextStyle(color:Colors.white,
            fontWeight: FontWeight.w600 ,fontSize: 16),),
         )
-:Container(
+            :Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color:AppColors.primaryColor,

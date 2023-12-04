@@ -1,3 +1,5 @@
+import 'package:chat_app/pages/HomeScreen/home.dart';
+import 'package:chat_app/res/components/navigate_function.dart';
 import 'package:chat_app/services/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,12 +24,12 @@ class _GroupInfoState extends State<GroupInfo> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     getMembers();
+    super.initState();
+
   }
 
-  getMembers() async {
+  getMembers() async{
     DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).
     getGroupMembers(widget.groupId).then((val) {
       setState(() {
@@ -47,19 +49,48 @@ class _GroupInfoState extends State<GroupInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            elevation: 0,
+            centerTitle: true,
+            title: Text("Group Info", style: TextStyle(color: Colors.white,
+                fontSize: 27, fontWeight: FontWeight.bold),),
+            backgroundColor: AppColors.primaryColor,
           actions: [
             IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.exit_to_app, color: Colors.white,),),
-          ],
-          elevation: 0,
-          centerTitle: true,
-          title: Text("Group Info", style: TextStyle(color: Colors.white,
-              fontSize: 27, fontWeight: FontWeight.bold),),
-          backgroundColor: AppColors.primaryColor,
+                onPressed: () {
+    showDialog(
+    barrierDismissible: false,
+    context: context, builder: (context) {
+      return AlertDialog(
+        title: Text("Exit"),
+        content: Text("Are you sure you exit the group"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.cancel,
+                color: Colors.redAccent,)
+          ),
+          IconButton(
+            onPressed: ()async{
+              DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).
+              toggleGroupJoin(widget.groupId,getName(widget.adminName), widget.groupName).
+              whenComplete(() {
+                nextScreenReplacement(context,HomePage());
+              });
+
+            },
+            icon: Icon(Icons.done, color: Colors.green,),),
+
+        ],
+      );
+    });
+    },
+    icon: Icon(Icons.exit_to_app, color: Colors.white,)),
+        ],
         ),
-        body: Container(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+         body: Container(
+          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
           child: Column(
               children:[
           Container(
@@ -95,11 +126,11 @@ class _GroupInfoState extends State<GroupInfo> {
         ),
                 memberList(),
 
-        ]
+        ],
     ),
 
 
-    )
+    ),
 
     );
   }
@@ -123,7 +154,7 @@ class _GroupInfoState extends State<GroupInfo> {
                           radius: 30,
                           backgroundColor: AppColors.primaryColor,
 
-                          child: Text(getName(snapshot.data["members"][index])
+                          child: Text(getName(snapshot.data['members'][index])
                               .substring(0, 1)
                               .toUpperCase(), style: TextStyle(color: Colors
                               .white, fontSize: 20, fontWeight: FontWeight
