@@ -77,6 +77,7 @@ class _HomePageState extends State<HomePage> {
         title: Text('Groups',style: TextStyle(color: Colors.white,
             fontSize: 27, fontWeight: FontWeight.bold),),
         backgroundColor:AppColors.primaryColor,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       drawer: Drawer(
         child: ListView(

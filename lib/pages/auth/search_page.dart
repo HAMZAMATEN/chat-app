@@ -22,13 +22,14 @@ class _SearchPageState extends State<SearchPage> {
   bool hasUserSearched = false;
   String userName = "";
   bool isJoined = false;
-  User ? user;
+  User? user;
 
 
   @override
   void initState() {
-    getCurrentUserIdAndName();
     super.initState();
+    getCurrentUserIdAndName();
+
   }
 
   getCurrentUserIdAndName() async {
@@ -57,6 +58,7 @@ class _SearchPageState extends State<SearchPage> {
         title: Text("Search", style: TextStyle(color: Colors.white,
             fontSize: 27, fontWeight: FontWeight.bold),),
         backgroundColor: AppColors.primaryColor,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: Column(
           children: [
@@ -95,7 +97,9 @@ class _SearchPageState extends State<SearchPage> {
                 ],
               ),
             ),
-            isLoading ? Center(child: CircularProgressIndicator(
+            isLoading
+                ? Center(
+              child: CircularProgressIndicator(
               color: AppColors.primaryColor,),
             )
                 : groupList(),
@@ -165,26 +169,29 @@ class _SearchPageState extends State<SearchPage> {
         subtitle: Text("Admin:${getName(admin)}",style:TextStyle(fontSize: 17,fontWeight: FontWeight.w400),),
       trailing: InkWell(
         onTap:() async {
-          await DatabaseService(uid: user!.uid).toggleGroupJoin(groupId, groupName, userName);
-            setState(() {
-              isJoined= !isJoined;
-              if(isJoined){
-            showSnackBar(context, Colors.green, "Successfully joined the group");
-            Future.delayed(Duration(seconds: 2),(){
-              nextScreen(context, ChatPage(
-                  groupId: groupId,
-                  groupName: groupName,
-                  userName: userName));
-            });
-          }else{
-            setState(() {
-              isJoined= !isJoined;
-              showSnackBar(context, Colors.redAccent, "Left the group $groupName");
-            });
-          }
-        },
-            );},
+          await DatabaseService(uid: user!.uid).toggleGroupJoin(
+              groupId, groupName, userName);
 
+          setState(() {
+            isJoined = !isJoined;
+            if (isJoined) {
+              showSnackBar(
+                  context, Colors.green, "Successfully joined the group");
+              Future.delayed(Duration(seconds: 2), () {
+                nextScreen(context, ChatPage(
+                    groupId: groupId,
+                    groupName: groupName,
+                    userName: userName));
+              });
+            } else {
+              setState(() {
+                isJoined = !isJoined;
+                showSnackBar(
+                    context, Colors.redAccent, "Left the group $groupName");
+              });
+            }
+          });
+        },
         child:  isJoined ? Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),

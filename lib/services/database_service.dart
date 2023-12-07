@@ -70,7 +70,7 @@ class DatabaseService {
     return documentSnapshot['admin'];
     }
 //getGroupMembers
-getGroupMembers(String groupId) async{
+getGroupMembers(groupId) async{
     return groupCollection.doc(groupId).snapshots();
 }
 //searchByName
@@ -117,12 +117,12 @@ Future toggleGroupJoin(
   }
   }
   //send message
- sendMessages(String groupId,Map<String, dynamic> chatMessagesData)async{
-    groupCollection.doc(groupId).collection("message").add(chatMessagesData);
+ sendMessage(String groupId, Map<String, dynamic> chatMessageData)async{
+    groupCollection.doc(groupId).collection("messages").add(chatMessageData);
     groupCollection.doc(groupId).update({
-      "recentMessage":chatMessagesData["message"],
-      "recentMessageSender":chatMessagesData["sender"],
-      "recentMessageTime":chatMessagesData["time"].toString(),
+      "recentMessage":chatMessageData["message"],
+      "recentMessageSender":chatMessageData["sender"],
+      "recentMessageTime":chatMessageData["time"].toString(),
     });
  }
 }

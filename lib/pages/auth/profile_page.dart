@@ -25,6 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Text('Profile',style: TextStyle(color: Colors.white,
             fontSize: 27, fontWeight: FontWeight.bold),),
         backgroundColor:AppColors.primaryColor,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       drawer: Drawer(
         child: ListView(

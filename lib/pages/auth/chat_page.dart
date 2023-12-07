@@ -23,7 +23,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   Stream<QuerySnapshot> ? chats;
   TextEditingController messageController=TextEditingController();
-  String admin="";
+  String admin = "";
   @override
  void initState() {
     getChatAndAdmin();
@@ -58,6 +58,7 @@ class _ChatPageState extends State<ChatPage> {
         ],
         elevation: 0,
         centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.white),
         title: Text(widget.groupName,style: TextStyle(color: Colors.white,
             fontSize: 27, fontWeight: FontWeight.bold),),
         backgroundColor:AppColors.primaryColor,
@@ -88,7 +89,7 @@ class _ChatPageState extends State<ChatPage> {
                   SizedBox(width: 12,),
                   GestureDetector(
                     onTap: (){
-                     sendMessages();
+                     sendMessage();
                     },
                     child: Container(
                       height:50,
@@ -112,7 +113,7 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
   chatMessages(){
-    return StreamBuilder(
+    return  StreamBuilder(
       stream:chats,
       builder:(context,AsyncSnapshot snapshot){
         return snapshot.hasData?ListView.builder(
@@ -123,21 +124,21 @@ class _ChatPageState extends State<ChatPage> {
                 message:snapshot.data.docs[index]['message'],
                 sentByMe:widget.userName ==
                     snapshot.data.docs[index]['sender'],);
-            }
+            },
 
             )
             :Container();
       },
     );
   }
-  sendMessages(){
+  sendMessage(){
     if(messageController.text.isNotEmpty){
-      Map<String, dynamic> chatMessagesMap = {
+      Map<String, dynamic> chatMessageMap = {
        "message":messageController.text,
         "sender":widget.userName,
         "time":DateTime.now().millisecondsSinceEpoch,
       };
-      DatabaseService().sendMessages(widget.groupId, chatMessagesMap);
+      DatabaseService().sendMessage(widget.groupId, chatMessageMap);
       setState(() {
         messageController.clear();
       });

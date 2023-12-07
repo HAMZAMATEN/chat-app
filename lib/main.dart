@@ -1,5 +1,6 @@
 import 'package:chat_app/Helper/helper_function.dart';
 import 'package:chat_app/pages/HomeScreen/home.dart';
+import 'package:chat_app/pages/SplashScreen/spalsh.dart';
 import 'package:chat_app/pages/auth/login.dart';
 import 'package:chat_app/res/components/loginpage.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,25 +25,25 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _isSignedIn=false;
+ // bool _isSignedIn=false;
   // This widget is the root of your application.
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getUserLoggedInStatus();
+ //   getUserLoggedInStatus();
   }
   //fetch data
-  getUserLoggedInStatus() async {
-    await HelperFunction.getUserLoggedInStatus().then((value){
-      if (value!=null){
-        setState(() {
-          _isSignedIn=value;
-        });
-
-      }
-    });
-}
+//   getUserLoggedInStatus() async {
+//     await HelperFunction.getUserLoggedInStatus().then((value){
+//       if (value!=null){
+//         setState(() {
+//           _isSignedIn=value;
+//         });
+//
+//       }
+//     });
+// }
 
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -50,7 +51,9 @@ class _MyAppState extends State<MyApp> {
       // theme: ThemeData(
       //   primaryColor:Color(0xFFee7b64),
       // ),
-      home: _isSignedIn ? HomePage():LoginPage(),
+      home:
+      //_isSignedIn ? HomePage():
+      SplashScreen(),
     );
   }
 }
